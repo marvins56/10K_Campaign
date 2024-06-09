@@ -20,8 +20,8 @@
       "WorkerCount": 5
     },
     "Storage": {
-      "StorageProvider": "postgresql",
-      "ConnectionString": "Host=localhost;Port=5432;Database=fshDb;Username=postgres;Password=admin;Include Error Detail=true",
+      "StorageProvider": "mssql",
+      "ConnectionString": "Data Source=.;Initial Catalog=10K;Integrated Security=True;MultipleActiveResultSets=True;Encrypt=True;TrustServerCertificate=True;",
       "Options": {
         "CommandBatchMaxTimeout": "00:05:00",
         "QueuePollInterval": "00:00:01",
@@ -30,6 +30,7 @@
         "DisableGlobalLocks": true
       }
     },
+
     "Credentials": {
       "User": "Admin",
       "Password": "S3(r3tP@55w0rd"
