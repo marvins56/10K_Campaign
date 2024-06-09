@@ -1,0 +1,7 @@
+
+{
+  "DatabaseSettings": {
+    "DBProvider": "mssql",
+    "ConnectionString": "Data Source=.;Initial Catalog=10K;Integrated Security=True;MultipleActiveResultSets=True"
+  }
+}
