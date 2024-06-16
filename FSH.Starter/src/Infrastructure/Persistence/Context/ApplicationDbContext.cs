@@ -1,7 +1,8 @@
 using DocumentFormat.OpenXml.InkML;
 using Finbuckle.MultiTenant;
-using FSH.Starter.Application.Common.Events;
 using FSH.Starter.Application.Common.Interfaces;
+
+using FSH.Starter.Application.Common.Events;
 using FSH.Starter.Domain.Catalog;
 using FSH.Starter.Domain.Fundraising.Entities;
 using FSH.Starter.Infrastructure.Persistence.Configuration;
@@ -10,12 +11,13 @@ using Microsoft.Extensions.Options;
 
 namespace FSH.Starter.Infrastructure.Persistence.Context;
 
-public class ApplicationDbContext : BaseDbContext
+public class ApplicationDbContext : BaseDbContext, IApplicationDbContext
 {
     public ApplicationDbContext(ITenantInfo currentTenant, DbContextOptions options, ICurrentUser currentUser, ISerializerService serializer, IOptions<DatabaseSettings> dbSettings, IEventPublisher events)
-        : base(currentTenant, options, currentUser, serializer, dbSettings, events)
+           : base(currentTenant, options, currentUser, serializer, dbSettings, events)
     {
     }
+
 
     public DbSet<Product> Products => Set<Product>();
     public DbSet<Brand> Brands => Set<Brand>();
@@ -28,11 +30,15 @@ public class ApplicationDbContext : BaseDbContext
     public DbSet<Account> Accounts { get; set; }
     public DbSet<Configurations> Configurations { get; set; }
 
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
 
         modelBuilder.HasDefaultSchema(SchemaNames.Catalog);
+
+        modelBuilder.ApplyConfiguration(new CampaignConfiguration());
+
 
         // Configure CampaignStudent entity
         modelBuilder.Entity<CampaignStudent>()
@@ -94,12 +100,7 @@ public class ApplicationDbContext : BaseDbContext
                   .OnDelete(DeleteBehavior.Restrict);
         });
 
-        // Configure Campaign entity
-        modelBuilder.Entity<Campaign>(entity =>
-        {
-            entity.HasKey(e => e.CampaignId);
-        });
-
+     
         // Configure Fundraiser entity
         modelBuilder.Entity<Fundraiser>(entity =>
         {

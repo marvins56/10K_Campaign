@@ -1,9 +1,12 @@
+using DocumentFormat.OpenXml.Office2016.Drawing.ChartDrawing;
 using FSH.Starter.Application;
+using FSH.Starter.Application.Common.Interfaces;
 using FSH.Starter.Host.Configurations;
 using FSH.Starter.Host.Controllers;
 using FSH.Starter.Infrastructure;
 using FSH.Starter.Infrastructure.Common;
 using FSH.Starter.Infrastructure.Logging.Serilog;
+using FSH.Starter.Infrastructure.Persistence.Context;
 using Serilog;
 using Serilog.Formatting.Compact;
 
@@ -18,6 +21,8 @@ try
     builder.AddConfigurations().RegisterSerilog();
     builder.Services.AddControllers();
     builder.Services.AddInfrastructure(builder.Configuration);
+    builder.Services.AddScoped<IApplicationDbContext, ApplicationDbContext>();
+
     builder.Services.AddApplication();
 
     var app = builder.Build();
