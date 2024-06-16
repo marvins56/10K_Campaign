@@ -16,4 +16,9 @@
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       </PackageReference>
     </ItemGroup>
+    <ItemGroup>
+      <Folder Include="Fundraising\Interfaces\" />
+      <Folder Include="Fundraising\Agrregates\" />
+      <Folder Include="Fundraising\ValueObjects\" />
+    </ItemGroup>
 </Project>
