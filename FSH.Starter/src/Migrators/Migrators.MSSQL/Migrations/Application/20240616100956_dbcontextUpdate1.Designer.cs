@@ -12,18 +12,19 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Migrators.MSSQL.Migrations.Application
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220125214521_InitialMigrations")]
-    partial class InitialMigrations
+    [Migration("20240616100956_dbcontextUpdate1")]
+    partial class dbcontextUpdate1
     {
+        /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasDefaultSchema("Catalog")
-                .HasAnnotation("ProductVersion", "6.0.1")
+                .HasAnnotation("ProductVersion", "7.0.4")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
             modelBuilder.Entity("FSH.Starter.Domain.Catalog.Brand", b =>
                 {
@@ -125,6 +126,202 @@ namespace Migrators.MSSQL.Migrations.Application
                     b.HasAnnotation("Finbuckle:MultiTenant", true);
                 });
 
+            modelBuilder.Entity("FSH.Starter.Domain.Fundraising.Entities.Account", b =>
+                {
+                    b.Property<Guid>("AccountId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("AccountName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Balance")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("AccountId");
+
+                    b.ToTable("Accounts", "Catalog");
+                });
+
+            modelBuilder.Entity("FSH.Starter.Domain.Fundraising.Entities.Campaign", b =>
+                {
+                    b.Property<Guid>("CampaignId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CampaignName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal>("TargetAmount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("CampaignId");
+
+                    b.ToTable("Campaigns", "Catalog");
+                });
+
+            modelBuilder.Entity("FSH.Starter.Domain.Fundraising.Entities.CampaignStudent", b =>
+                {
+                    b.Property<Guid>("CampaignId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("StudentId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("CampaignId", "StudentId");
+
+                    b.HasIndex("StudentId");
+
+                    b.ToTable("CampaignStudents", "Catalog");
+                });
+
+            modelBuilder.Entity("FSH.Starter.Domain.Fundraising.Entities.Configurations", b =>
+                {
+                    b.Property<Guid>("ConfigurationsId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("CampaignId")
+                        .IsRequired()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ConfigType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ConfigValue")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("DonationId")
+                        .IsRequired()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("ConfigurationsId");
+
+                    b.HasIndex("CampaignId");
+
+                    b.HasIndex("DonationId");
+
+                    b.ToTable("Configurations", "Catalog");
+                });
+
+            modelBuilder.Entity("FSH.Starter.Domain.Fundraising.Entities.Donation", b =>
+                {
+                    b.Property<Guid>("DonationId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<Guid>("CampaignId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("DonationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("DonorId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("DonationId");
+
+                    b.HasIndex("CampaignId");
+
+                    b.HasIndex("DonorId");
+
+                    b.ToTable("Donations", "Catalog");
+                });
+
+            modelBuilder.Entity("FSH.Starter.Domain.Fundraising.Entities.DonationStudent", b =>
+                {
+                    b.Property<Guid>("DonationId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("StudentId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("DonationId", "StudentId");
+
+                    b.HasIndex("StudentId");
+
+                    b.ToTable("DonationStudents", "Catalog");
+                });
+
+            modelBuilder.Entity("FSH.Starter.Domain.Fundraising.Entities.Fundraiser", b =>
+                {
+                    b.Property<Guid>("FundraiserId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("AccountId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Phone")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("FundraiserId");
+
+                    b.HasIndex("AccountId");
+
+                    b.ToTable("Fundraisers", "Catalog");
+                });
+
+            modelBuilder.Entity("FSH.Starter.Domain.Fundraising.Entities.Student", b =>
+                {
+                    b.Property<Guid>("StudentId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Phone")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("StudentId");
+
+                    b.ToTable("Students", "Catalog");
+                });
+
             modelBuilder.Entity("FSH.Starter.Infrastructure.Auditing.Trail", b =>
                 {
                     b.Property<Guid>("Id")
@@ -210,7 +407,7 @@ namespace Migrators.MSSQL.Migrations.Application
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("ClaimType")
                         .HasColumnType("nvarchar(max)");
@@ -222,18 +419,6 @@ namespace Migrators.MSSQL.Migrations.Application
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Group")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LastModifiedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("LastModifiedOn")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("RoleId")
@@ -354,7 +539,7 @@ namespace Migrators.MSSQL.Migrations.Application
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("ClaimType")
                         .HasColumnType("nvarchar(max)");
@@ -477,6 +662,93 @@ namespace Migrators.MSSQL.Migrations.Application
                     b.Navigation("Brand");
                 });
 
+            modelBuilder.Entity("FSH.Starter.Domain.Fundraising.Entities.CampaignStudent", b =>
+                {
+                    b.HasOne("FSH.Starter.Domain.Fundraising.Entities.Campaign", "Campaign")
+                        .WithMany("CampaignStudents")
+                        .HasForeignKey("CampaignId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("FSH.Starter.Domain.Fundraising.Entities.Student", "Student")
+                        .WithMany("CampaignStudents")
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Campaign");
+
+                    b.Navigation("Student");
+                });
+
+            modelBuilder.Entity("FSH.Starter.Domain.Fundraising.Entities.Configurations", b =>
+                {
+                    b.HasOne("FSH.Starter.Domain.Fundraising.Entities.Campaign", "Campaign")
+                        .WithMany("Configurations")
+                        .HasForeignKey("CampaignId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("FSH.Starter.Domain.Fundraising.Entities.Donation", "Donation")
+                        .WithMany("Configurations")
+                        .HasForeignKey("DonationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Campaign");
+
+                    b.Navigation("Donation");
+                });
+
+            modelBuilder.Entity("FSH.Starter.Domain.Fundraising.Entities.Donation", b =>
+                {
+                    b.HasOne("FSH.Starter.Domain.Fundraising.Entities.Campaign", "Campaign")
+                        .WithMany("Donations")
+                        .HasForeignKey("CampaignId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("FSH.Starter.Domain.Fundraising.Entities.Fundraiser", "Donor")
+                        .WithMany("Donations")
+                        .HasForeignKey("DonorId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Campaign");
+
+                    b.Navigation("Donor");
+                });
+
+            modelBuilder.Entity("FSH.Starter.Domain.Fundraising.Entities.DonationStudent", b =>
+                {
+                    b.HasOne("FSH.Starter.Domain.Fundraising.Entities.Donation", "Donation")
+                        .WithMany("DonationStudents")
+                        .HasForeignKey("DonationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("FSH.Starter.Domain.Fundraising.Entities.Student", "Student")
+                        .WithMany("DonationStudents")
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Donation");
+
+                    b.Navigation("Student");
+                });
+
+            modelBuilder.Entity("FSH.Starter.Domain.Fundraising.Entities.Fundraiser", b =>
+                {
+                    b.HasOne("FSH.Starter.Domain.Fundraising.Entities.Account", "Account")
+                        .WithMany("Fundraisers")
+                        .HasForeignKey("AccountId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Account");
+                });
+
             modelBuilder.Entity("FSH.Starter.Infrastructure.Identity.ApplicationRoleClaim", b =>
                 {
                     b.HasOne("FSH.Starter.Infrastructure.Identity.ApplicationRole", null)
@@ -526,6 +798,39 @@ namespace Migrators.MSSQL.Migrations.Application
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("FSH.Starter.Domain.Fundraising.Entities.Account", b =>
+                {
+                    b.Navigation("Fundraisers");
+                });
+
+            modelBuilder.Entity("FSH.Starter.Domain.Fundraising.Entities.Campaign", b =>
+                {
+                    b.Navigation("CampaignStudents");
+
+                    b.Navigation("Configurations");
+
+                    b.Navigation("Donations");
+                });
+
+            modelBuilder.Entity("FSH.Starter.Domain.Fundraising.Entities.Donation", b =>
+                {
+                    b.Navigation("Configurations");
+
+                    b.Navigation("DonationStudents");
+                });
+
+            modelBuilder.Entity("FSH.Starter.Domain.Fundraising.Entities.Fundraiser", b =>
+                {
+                    b.Navigation("Donations");
+                });
+
+            modelBuilder.Entity("FSH.Starter.Domain.Fundraising.Entities.Student", b =>
+                {
+                    b.Navigation("CampaignStudents");
+
+                    b.Navigation("DonationStudents");
                 });
 #pragma warning restore 612, 618
         }

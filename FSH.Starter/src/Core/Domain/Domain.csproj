@@ -17,8 +17,8 @@
       </PackageReference>
     </ItemGroup>
     <ItemGroup>
-      <Folder Include="Fundraising\Interfaces\" />
-      <Folder Include="Fundraising\Agrregates\" />
-      <Folder Include="Fundraising\ValueObjects\" />
+      <Folder Include="Campaign\Agrregates\" />
+      <Folder Include="Campaign\Services\" />
+      <Folder Include="Campaign\ValueObjects\" />
     </ItemGroup>
 </Project>

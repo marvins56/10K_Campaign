@@ -13,8 +13,8 @@ public class Campaign
     public DateTime EndDate { get; set; }
     public string Description { get; set; }
     public decimal TargetAmount { get; set; }
-    public Guid? ConfigurationsId { get; set; }
-    public Configurations Configurations { get; set; }
+
     public ICollection<Donation> Donations { get; set; }
     public ICollection<CampaignStudent> CampaignStudents { get; set; }
+    public ICollection<Configurations> Configurations { get; set; }
 }
