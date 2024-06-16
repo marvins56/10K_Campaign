@@ -9,6 +9,7 @@
         <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.5.2" />
         <PackageReference Include="Mapster" Version="7.3.0" />
         <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.1.0" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.4" />
         <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="7.0.0" />
         <PackageReference Include="Microsoft.Extensions.Localization" Version="7.0.4" />
     </ItemGroup>
@@ -23,8 +24,7 @@
       </PackageReference>
     </ItemGroup>
     <ItemGroup>
-      <Folder Include="Campaign\DTOS\" />
-      <Folder Include="Campaign\Interfaces\" />
-      <Folder Include="Campaign\Services\" />
+      <Folder Include="Fundraising\Campaign\Interfaces\" />
+      <Folder Include="Fundraising\Campaign\Services\" />
     </ItemGroup>
 </Project>
