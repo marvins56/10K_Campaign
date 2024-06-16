@@ -50,6 +50,7 @@
         </None>
     </ItemGroup>
     <ItemGroup>
+      <Folder Include="Controllers\Campaign\" />
       <Folder Include="Databases\Host\" />
     </ItemGroup>
     <ItemGroup>

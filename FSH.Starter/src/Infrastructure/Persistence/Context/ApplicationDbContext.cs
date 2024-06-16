@@ -1,3 +1,4 @@
+using DocumentFormat.OpenXml.InkML;
 using Finbuckle.MultiTenant;
 using FSH.Starter.Application.Common.Events;
 using FSH.Starter.Application.Common.Interfaces;
@@ -17,23 +18,6 @@ public class ApplicationDbContext : BaseDbContext
     }
 
     public DbSet<Product> Products => Set<Product>();
-    public DbSet<Brand> Brands => Set<Brand>();
-    public DbSet<Campaign> Campaigns { get; set; }
-    public DbSet<Donation> Donations { get; set; }
-    public DbSet<Student> Students { get; set; }
-    public DbSet<CampaignStudent> CampaignStudents { get; set; }
-    public DbSet<DonationStudent> DonationStudents { get; set; }
-    public DbSet<Fundraiser> Fundraisers { get; set; }
-    public DbSet<Account> Accounts { get; set; }
-    public DbSet<Configurations> Configurations { get; set; }
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        base.OnModelCreating(modelBuilder);
-
-        modelBuilder.HasDefaultSchema(SchemaNames.Catalog);
-
-      // Define DbSets for your entities
-        public DbSet<Product> Products => Set<Product>();
     public DbSet<Brand> Brands => Set<Brand>();
     public DbSet<Campaign> Campaigns { get; set; }
     public DbSet<Donation> Donations { get; set; }
@@ -78,8 +62,80 @@ public class ApplicationDbContext : BaseDbContext
             .WithMany(s => s.DonationStudents)
             .HasForeignKey(ds => ds.StudentId);
 
-      
-        modelBuilder.ApplyMultiTenant();
+        // Configure Configurations entity
+        modelBuilder.Entity<Configurations>(entity =>
+        {
+            entity.HasKey(e => e.ConfigurationsId);
+
+            entity.HasOne(e => e.Campaign)
+                  .WithMany(c => c.Configurations)
+                  .HasForeignKey(e => e.CampaignId)
+                  .OnDelete(DeleteBehavior.Cascade); // or .OnDelete(DeleteBehavior.SetNull)
+
+            entity.HasOne(e => e.Donation)
+                  .WithMany(d => d.Configurations)
+                  .HasForeignKey(e => e.DonationId)
+                  .OnDelete(DeleteBehavior.Cascade); // or .OnDelete(DeleteBehavior.SetNull)
+        });
+
+        // Configure Donation entity
+        modelBuilder.Entity<Donation>(entity =>
+        {
+            entity.HasKey(e => e.DonationId);
+
+            entity.HasOne(e => e.Campaign)
+                  .WithMany(c => c.Donations)
+                  .HasForeignKey(e => e.CampaignId)
+                  .OnDelete(DeleteBehavior.Restrict);
+
+            entity.HasOne(e => e.Donor)
+                  .WithMany(d => d.Donations)
+                  .HasForeignKey(e => e.DonorId)
+                  .OnDelete(DeleteBehavior.Restrict);
+        });
+
+        // Configure Campaign entity
+        modelBuilder.Entity<Campaign>(entity =>
+        {
+            entity.HasKey(e => e.CampaignId);
+        });
+
+        // Configure Fundraiser entity
+        modelBuilder.Entity<Fundraiser>(entity =>
+        {
+            entity.HasKey(e => e.FundraiserId);
+
+            entity.HasOne(e => e.Account)
+                  .WithMany(a => a.Fundraisers)
+                  .HasForeignKey(e => e.AccountId)
+                  .OnDelete(DeleteBehavior.Restrict);
+        });
+
+        // Configure Account entity
+        modelBuilder.Entity<Account>(entity =>
+        {
+            entity.HasKey(e => e.AccountId);
+        });
+
+        // Configure Student entity
+        modelBuilder.Entity<Student>(entity =>
+        {
+            entity.HasKey(e => e.StudentId);
+        });
+
+        // Validate the model
+        var model = modelBuilder.Model;
+        foreach (var entityType in model.GetEntityTypes())
+        {
+            foreach (var foreignKey in entityType.GetForeignKeys())
+            {
+                if (!foreignKey.PrincipalKey.IsPrimaryKey())
+                {
+                    throw new InvalidOperationException($"Entity type '{entityType.DisplayName()}' has a foreign key defined on '{foreignKey.Properties.Format()}' with a principal key that does not match the principal entity type '{foreignKey.PrincipalEntityType.DisplayName()}' primary key '{foreignKey.PrincipalKey.Properties.Format()}'.");
+                }
+            }
+        }
+
 
     }
 }

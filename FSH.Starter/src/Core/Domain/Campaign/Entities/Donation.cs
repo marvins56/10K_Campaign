@@ -12,10 +12,9 @@ public class Donation
     public decimal Amount { get; set; }
     public DateTime DonationDate { get; set; }
     public Guid DonorId { get; set; }
-    public Guid? ConfigurationsId { get; set; }
 
     public Campaign Campaign { get; set; }
     public Fundraiser Donor { get; set; }
-    public Configurations Configurations { get; set; }
     public ICollection<DonationStudent> DonationStudents { get; set; }
+    public ICollection<Configurations> Configurations { get; set; }
 }

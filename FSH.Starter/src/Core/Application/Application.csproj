@@ -22,4 +22,9 @@
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       </PackageReference>
     </ItemGroup>
+    <ItemGroup>
+      <Folder Include="Campaign\DTOS\" />
+      <Folder Include="Campaign\Interfaces\" />
+      <Folder Include="Campaign\Services\" />
+    </ItemGroup>
 </Project>

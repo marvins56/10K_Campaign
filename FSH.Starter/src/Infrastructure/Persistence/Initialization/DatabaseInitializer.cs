@@ -63,19 +63,26 @@ internal class DatabaseInitializer : IDatabaseInitializer
 
     private async Task SeedRootTenantAsync(CancellationToken cancellationToken)
     {
-        if (await _tenantDbContext.TenantInfo.FindAsync(new object?[] { MultitenancyConstants.Root.Id }, cancellationToken: cancellationToken) is null)
+        try
         {
-            var rootTenant = new FSHTenantInfo(
-                MultitenancyConstants.Root.Id,
-                MultitenancyConstants.Root.Name,
-                string.Empty,
-                MultitenancyConstants.Root.EmailAddress);
+            if (await _tenantDbContext.TenantInfo.FindAsync(new object?[] { MultitenancyConstants.Root.Id }, cancellationToken: cancellationToken) is null)
+            {
+                var rootTenant = new FSHTenantInfo(
+                    MultitenancyConstants.Root.Id,
+                    MultitenancyConstants.Root.Name,
+                    string.Empty,
+                    MultitenancyConstants.Root.EmailAddress);
 
-            rootTenant.SetValidity(DateTime.UtcNow.AddYears(1));
+                rootTenant.SetValidity(DateTime.UtcNow.AddYears(1));
 
-            _tenantDbContext.TenantInfo.Add(rootTenant);
+                _tenantDbContext.TenantInfo.Add(rootTenant);
 
-            await _tenantDbContext.SaveChangesAsync(cancellationToken);
+                await _tenantDbContext.SaveChangesAsync(cancellationToken);
+            }
+        }
+        catch(Exception ex)
+        {
+            _logger.LogError(ex, "An error occurred seeding the root tenant.");
         }
     }
 }
