@@ -28,13 +28,13 @@ public class CreateFundraiserCommandHandler : IRequestHandler<CreateFundraiserCo
             throw new NotFoundException(nameof(Account));
         }
 
-        //check if the fundraiser already exists
 
         // Check if an account with the same name already exists
         if (await _context.Fundraisers.AnyAsync(a => a.Email == request.Email, cancellationToken))
         {
             throw new DuplicateAccountException(request.Email);
         }
+
         // Create the fundraiser
         var fundraiser = new Fundraiser
         {
