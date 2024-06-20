@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FSH.Starter.Application.Fundraising.Campaign.Handlers;
+namespace FSH.Starter.Application.Fundraising.Campaign.Handlers.Querries;
 public class GetCampaignQueryHandler : IRequestHandler<GetCampaignQuery, CampaignDto>
 {
     private readonly IApplicationDbContext _context;
