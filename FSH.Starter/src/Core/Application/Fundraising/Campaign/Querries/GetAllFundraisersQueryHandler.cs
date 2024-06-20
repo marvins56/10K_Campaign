@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FSH.Starter.Application.Fundraising.Campaign.Handlers.Querries;
+namespace FSH.Starter.Application.Fundraising.Campaign.Querries;
 public class GetAllFundraisersQueryHandler : IRequestHandler<GetAllFundraisersQuery, List<FundraiserDto>>
 {
     private readonly IApplicationDbContext _context;
