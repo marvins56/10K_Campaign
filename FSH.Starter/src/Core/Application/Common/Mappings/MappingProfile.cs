@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using FSH.Starter.Application.Fundraising.Campaign.Commands;
 using FSH.Starter.Application.Fundraising.Campaign.DTOS;
 using FSH.Starter.Domain.Fundraising.Entities;
 using System;
@@ -15,5 +16,11 @@ public class MappingProfile : Profile
     {
         CreateMap<Fundraiser, FundraiserDto>()
             .ForMember(dest => dest.AccountName, opt => opt.MapFrom(src => src.Account.AccountName));
+        CreateMap<Student, StudentDto>().ReverseMap();
+        CreateMap<CreateStudentCommand, Student>();
+        CreateMap<DonationStudent, DonationStudentDto>();
+        CreateMap<Donation, DonationDto>();
+        CreateMap<CreateDonationCommand, Donation>();
+        CreateMap<UpdateDonationCommand, Donation>();
     }
 }
