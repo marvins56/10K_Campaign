@@ -8,4 +8,20 @@ public class NotFoundException : CustomException
         : base(message, null, HttpStatusCode.NotFound)
     {
     }
+
+    public class DuplicateAccountException : Exception
+    {
+        public DuplicateAccountException(string accountName)
+            : base($"An account with the name '{accountName}' already exists.")
+        {
+        }
+    }
+
+    public class DuplicateFundraiserException : Exception
+    {
+        public DuplicateFundraiserException(string accountName)
+            : base($"A member with the email '{accountName}' already exists.")
+        {
+        }
+    }
 }

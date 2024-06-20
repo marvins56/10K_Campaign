@@ -26,6 +26,8 @@ public static class FSHResource
     public const string RoleClaims = nameof(RoleClaims);
     public const string Products = nameof(Products);
     public const string Brands = nameof(Brands);
+    public const string Fundraiser = nameof(Fundraiser);
+    public const string Accounts = nameof(Accounts);
 }
 
 public static class FSHPermissions
@@ -64,8 +66,19 @@ public static class FSHPermissions
         new("View Tenants", FSHAction.View, FSHResource.Tenants, IsRoot: true),
         new("Create Tenants", FSHAction.Create, FSHResource.Tenants, IsRoot: true),
         new("Update Tenants", FSHAction.Update, FSHResource.Tenants, IsRoot: true),
-        new("Upgrade Tenant Subscription", FSHAction.UpgradeSubscription, FSHResource.Tenants, IsRoot: true)
-    };
+        // Fundraiser permissions
+        new FSHPermission("View Fundraisers", FSHAction.View, FSHResource.Fundraiser),
+        new FSHPermission("Create Fundraisers", FSHAction.Create, FSHResource.Fundraiser),
+        new FSHPermission("Update Fundraisers", FSHAction.Update, FSHResource.Fundraiser),
+        new FSHPermission("Delete Fundraisers", FSHAction.Delete, FSHResource.Fundraiser),
+
+        // Accounts permissions
+        new FSHPermission("View Accounts", FSHAction.View, FSHResource.Accounts),
+        new FSHPermission("Create Accounts", FSHAction.Create, FSHResource.Accounts),
+        new FSHPermission("Update Accounts", FSHAction.Update, FSHResource.Accounts),
+        new FSHPermission("Delete Accounts", FSHAction.Delete, FSHResource.Accounts),
+            new("Upgrade Tenant Subscription", FSHAction.UpgradeSubscription, FSHResource.Tenants, IsRoot: true)
+        };
 
     public static IReadOnlyList<FSHPermission> All { get; } = new ReadOnlyCollection<FSHPermission>(_all);
     public static IReadOnlyList<FSHPermission> Root { get; } = new ReadOnlyCollection<FSHPermission>(_all.Where(p => p.IsRoot).ToArray());

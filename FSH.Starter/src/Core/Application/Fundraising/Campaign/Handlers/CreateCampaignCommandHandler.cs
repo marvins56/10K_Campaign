@@ -1,10 +1,10 @@
-﻿using FSH.Starter.Application.Fundraising.Campaign.DTOS;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FSH.Starter.Domain.Fundraising.Entities;
+using FSH.Starter.Application.Fundraising.Campaign.Commands;
 
 namespace FSH.Starter.Application.Fundraising.Campaign.Handlers;
 public class CreateCampaignCommandHandler : IRequestHandler<CreateCampaignCommand, Guid>

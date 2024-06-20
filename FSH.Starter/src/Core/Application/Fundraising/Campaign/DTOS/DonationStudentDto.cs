@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace FSH.Starter.Application.Fundraising.Campaign.DTOS;
-public class GetAllCampaignsQuery : IRequest<List<CampaignDto>>
+public class DonationStudentDto
 {
-    public int? Page { get; set; } 
-    public int? PageSize { get; set; } 
-    public string Filter { get; set; } 
+    public Guid DonationId { get; set; }
+    public Guid StudentId { get; set; }
 }
+

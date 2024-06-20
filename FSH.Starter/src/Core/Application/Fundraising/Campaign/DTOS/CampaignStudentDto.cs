@@ -5,12 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace FSH.Starter.Application.Fundraising.Campaign.DTOS;
-public class GetCampaignQuery : IRequest<CampaignDto>
+public class CampaignStudentDto
 {
+    public Guid Id { get; set; }
     public Guid CampaignId { get; set; }
-
-    public GetCampaignQuery(Guid campaignId)
-    {
-        CampaignId = campaignId;
-    }
+    public Guid StudentId { get; set; }
 }

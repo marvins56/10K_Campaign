@@ -1,14 +1,14 @@
 {
   "SwaggerSettings": {
     "Enable": true,
-    "Title": ".NET 7 WebAPI - Clean Architecture",
+    "Title": ".NET 7 WebAPI - 10K CAMPAIGN",
     "Version": "1.0.0",
-    "Description": "Clean Architecture Template for .NET 7 WebApi built with Multitenancy Support.",
-    "ContactName": "Mukesh Murugan",
-    "ContactEmail": "hello@codewithmukesh.com",
-    "ContactUrl": "https://linkedin.com/in/iammukeshm",
+    "Description": "Donation Funds Raiser API",
+    "ContactName": "Kauta Marvin",
+    "ContactEmail": "okmarvins@gmail.com",
+    "ContactUrl": "https://kautamarvin.netlify.app/",
     "License": true,
     "LicenseName": "MIT License",
-    "LicenseUrl": "https://github.com/fullstackhero/dotnet-webapi-boilerplate/blob/main/LICENSE"
+    "LicenseUrl": "https://opensource.org/licenses/MIT"
   }
 }

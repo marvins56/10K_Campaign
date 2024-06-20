@@ -5,8 +5,8 @@ aws_region_b = "ap-south-1b"
 
 // Default Project Tags
 environment  = "staging"
-owner        = "Mukesh Murugan"
-project_name = "fullstackhero-dotnet-webapi"
+owner        = "Kauta Marvin"
+project_name = "10K CAMPAIGN"
 
 // RDS PostgreSQL Configuration
 pg_password = "posgresqladmin"
