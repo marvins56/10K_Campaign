@@ -5,7 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FSH.Starter.Application.Fundraising.Campaign.Handlers.Querries;
-public class GetAllAccountsQuery : IRequest<List<AccountDto>>
+namespace FSH.Starter.Application.Fundraising.Campaign.Querries;
+public class GetDonationByIdQuery : IRequest<DonationDto>
 {
+    public Guid DonationId { get; set; }
 }
