@@ -1,8 +1,8 @@
 ﻿using FSH.Starter.Application.Fundraising.Campaign.DTOS;
 using FSH.Starter.Application.Fundraising.Campaign.Handlers.Querries;
-using FSH.Starter.Application.Fundraising.Campaign.Handlers;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using FSH.Starter.Application.Fundraising.Campaign.Commands;
 
 namespace FSH.Starter.Host.Controllers.Campaign;
 [ApiController]

@@ -1,5 +1,5 @@
-﻿using FSH.Starter.Application.Fundraising.Campaign.DTOS;
-using FSH.Starter.Application.Fundraising.Campaign.Handlers;
+﻿using FSH.Starter.Application.Fundraising.Campaign.Commands;
+using FSH.Starter.Application.Fundraising.Campaign.DTOS;
 using FSH.Starter.Application.Fundraising.Campaign.Handlers.Querries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;

@@ -18,3 +18,5 @@ public class Donation
     public ICollection<DonationStudent> DonationStudents { get; set; }
     public ICollection<Configurations> Configurations { get; set; }
 }
+
+
