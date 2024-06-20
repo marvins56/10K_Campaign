@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using FSH.Starter.Application.Fundraising.Campaign.DTOS;
-using FSH.Starter.Application.Fundraising.Campaign.Handlers.Querries;
+using FSH.Starter.Application.Fundraising.Campaign.Querries;
 using FSH.Starter.Domain.Fundraising.Entities;
 using System;
 using System.Collections.Generic;

@@ -1,4 +1,5 @@
-﻿using FSH.Starter.Domain.Fundraising.Entities;
+﻿using FSH.Starter.Application.Fundraising.Campaign.Commands;
+using FSH.Starter.Domain.Fundraising.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
