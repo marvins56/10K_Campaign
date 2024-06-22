@@ -24,4 +24,11 @@ public class NotFoundException : CustomException
         {
         }
     }
+    public class ResultExistsException : Exception
+    {
+        public ResultExistsException(string accountName)
+            : base($"Result '{accountName}' already exists.")
+        {
+        }
+    }
 }
