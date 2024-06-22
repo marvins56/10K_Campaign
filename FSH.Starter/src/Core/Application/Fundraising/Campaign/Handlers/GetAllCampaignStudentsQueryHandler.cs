@@ -22,7 +22,11 @@ public class GetAllCampaignStudentsQueryHandler : IRequestHandler<GetAllCampaign
 
     public async Task<List<CampaignStudentDto>> Handle(GetAllCampaignStudentsQuery request, CancellationToken cancellationToken)
     {
-        var campaignStudents = await _context.CampaignStudents.ToListAsync(cancellationToken);
+        var campaignStudents = await _context.CampaignStudents
+            .Include(cs => cs.Campaign)
+            .Include(cs => cs.Student)
+            .ToListAsync(cancellationToken);
+
         return _mapper.Map<List<CampaignStudentDto>>(campaignStudents);
     }
 }

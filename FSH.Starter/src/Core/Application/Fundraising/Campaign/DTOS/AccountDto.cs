@@ -11,5 +11,6 @@ public class AccountDto
     public string AccountName { get; set; }
     public decimal Balance { get; set; }
     public DateTime CreatedDate { get; set; }
+    public List<FundraiserDto> Fundraisers { get; set; }
 }
 

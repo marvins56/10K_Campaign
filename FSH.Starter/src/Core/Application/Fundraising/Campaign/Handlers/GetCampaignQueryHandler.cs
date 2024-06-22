@@ -1,11 +1,12 @@
 ﻿using FSH.Starter.Application.Fundraising.Campaign.DTOS;
+using FSH.Starter.Application.Fundraising.Campaign.Querries;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FSH.Starter.Application.Fundraising.Campaign.Querries;
+namespace FSH.Starter.Application.Fundraising.Campaign.Handlers;
 public class GetCampaignQueryHandler : IRequestHandler<GetCampaignQuery, CampaignDto>
 {
     private readonly IApplicationDbContext _context;

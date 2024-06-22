@@ -22,7 +22,10 @@ public class GetAllAccountsQueryHandler : IRequestHandler<GetAllAccountsQuery, L
 
     public async Task<List<AccountDto>> Handle(GetAllAccountsQuery request, CancellationToken cancellationToken)
     {
-        var accounts = await _context.Accounts.ToListAsync(cancellationToken);
+        //var accounts = await _context.Accounts.ToListAsync(cancellationToken);
+        var accounts = await _context.Accounts
+           .Include(a => a.Fundraisers)
+           .ToListAsync(cancellationToken);
 
         return _mapper.Map<List<AccountDto>>(accounts);
     }

@@ -24,6 +24,8 @@ public class GetDonationStudentByIdQueryHandler : IRequestHandler<GetDonationStu
     public async Task<DonationStudentDto> Handle(GetDonationStudentByIdQuery request, CancellationToken cancellationToken)
     {
         var donationStudent = await _context.DonationStudents
+            .Include(ds => ds.Donation)
+            .Include(ds => ds.Student)
             .FirstOrDefaultAsync(ds => ds.DonationId == request.DonationId && ds.StudentId == request.StudentId, cancellationToken);
 
         if (donationStudent == null)

@@ -31,4 +31,9 @@ public class NotFoundException : CustomException
         {
         }
     }
+  public class DuplicateConfigurationException : Exception
+    {
+        public DuplicateConfigurationException(string message)
+            : base($"Configuration '{message}' already exists.") { }
+    }
 }
