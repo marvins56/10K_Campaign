@@ -1,6 +1,9 @@
 ﻿using AutoMapper;
+using FSH.Starter.Application.Fundraising.Campaign;
+using FSH.Starter.Application.Fundraising.Campaign.DTOS;
 using FSH.Starter.Application.Fundraising.Campaign.Querries;
 using FSH.Starter.Domain.Fundraising.Entities;
+using Mapster;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -23,7 +26,7 @@ public class GetCampaignStudentByIdQueryHandler : IRequestHandler<GetCampaignStu
     public async Task<CampaignStudentDto> Handle(GetCampaignStudentByIdQuery request, CancellationToken cancellationToken)
     {
         var campaignStudent = await _context.CampaignStudents
-            .FirstOrDefaultAsync(cs => cs.Id == request.Id, cancellationToken);
+            .FirstOrDefaultAsync(cs => cs.CampaignId == request.Id, cancellationToken);
 
         if (campaignStudent == null)
         {

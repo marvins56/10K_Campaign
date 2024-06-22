@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FSH.Starter.Application.Fundraising.Campaign.DTOS;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
