@@ -10,5 +10,5 @@ public class GetAllCampaignsQuery : IRequest<List<CampaignDto>>
 {
     public int? Page { get; set; }
     public int? PageSize { get; set; }
-    public string Filter { get; set; }
+    public string? Filter { get; set; }
 }

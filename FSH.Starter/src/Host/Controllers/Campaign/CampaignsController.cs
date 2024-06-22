@@ -13,7 +13,7 @@ public class CampaignsController : VersionedApiController
     {
         try
         {
-            return Ok(await Mediator.Send(new GetCampaignQuery(id)));
+            return Ok(await Mediator.Send(new GetCampaignByIdQuery(id)));
         }
         catch (Exception ex)
         {
