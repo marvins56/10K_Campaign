@@ -2,6 +2,7 @@
 using FSH.Starter.Application.Fundraising.Campaign.DTOS;
 using FSH.Starter.Application.Fundraising.Campaign.Querries;
 using FSH.Starter.Domain.Fundraising.Entities;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,7 +23,9 @@ public class GetAccountByIdQueryHandler : IRequestHandler<GetAccountByIdQuery, A
 
     public async Task<AccountDto> Handle(GetAccountByIdQuery request, CancellationToken cancellationToken)
     {
-        var account = await _context.Accounts.FindAsync(new object[] { request.AccountId }, cancellationToken);
+        var account = await _context.Accounts
+            .Include(a => a.Fundraisers) 
+            .FirstOrDefaultAsync(a => a.AccountId == request.AccountId, cancellationToken);
 
         if (account == null)
         {

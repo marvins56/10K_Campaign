@@ -26,6 +26,8 @@ public class GetCampaignStudentByIdQueryHandler : IRequestHandler<GetCampaignStu
     public async Task<CampaignStudentDto> Handle(GetCampaignStudentByIdQuery request, CancellationToken cancellationToken)
     {
         var campaignStudent = await _context.CampaignStudents
+            .Include(cs => cs.Campaign)
+            .Include(cs => cs.Student)
             .FirstOrDefaultAsync(cs => cs.CampaignId == request.Id, cancellationToken);
 
         if (campaignStudent == null)

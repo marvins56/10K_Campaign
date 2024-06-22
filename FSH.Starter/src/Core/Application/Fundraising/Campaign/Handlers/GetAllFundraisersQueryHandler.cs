@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using FSH.Starter.Application.Fundraising.Campaign.DTOS;
+using FSH.Starter.Application.Fundraising.Campaign.Querries;
 using FSH.Starter.Domain.Fundraising.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -8,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FSH.Starter.Application.Fundraising.Campaign.Querries;
+namespace FSH.Starter.Application.Fundraising.Campaign.Handlers;
 public class GetAllFundraisersQueryHandler : IRequestHandler<GetAllFundraisersQuery, List<FundraiserDto>>
 {
     private readonly IApplicationDbContext _context;

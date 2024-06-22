@@ -22,7 +22,12 @@ public class GetAllDonationsQueryHandler : IRequestHandler<GetAllDonationsQuery,
 
     public async Task<List<DonationDto>> Handle(GetAllDonationsQuery request, CancellationToken cancellationToken)
     {
-        var donations = await _context.Donations.ToListAsync(cancellationToken);
+        //var donations = await _context.Donations.ToListAsync(cancellationToken);
+        var donations = await _context.Donations
+                .Include(d => d.Campaign)
+                .Include(d => d.Donor)
+                .ToListAsync(cancellationToken);
+
         return _mapper.Map<List<DonationDto>>(donations);
     }
 }
