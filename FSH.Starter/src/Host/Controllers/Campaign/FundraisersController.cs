@@ -15,10 +15,17 @@ public class FundraisersController : ControllerBase
         _mediator = mediator;
     }
 
-    [HttpGet]
-    public async Task<ActionResult<List<FundraiserDto>>> GetAll([FromQuery] string filter, [FromQuery] int? page, [FromQuery] int? pageSize)
+    [HttpGet("{id}")]
+    public async Task<ActionResult<FundraiserDto>> GetFundraiserById(Guid id)
     {
-        var query = new GetAllFundraisersQuery { Filter = filter, Page = page, PageSize = pageSize };
+        var fundraiser = await _mediator.Send(new GetFundraiserByIdQuery(id));
+        return Ok(fundraiser);
+    }
+
+    [HttpGet]
+    public async Task<ActionResult<List<FundraiserDto>>> GetAll()
+    {
+        var query = new GetAllFundraisersQuery();
         var result = await _mediator.Send(query);
         return Ok(result);
     }
@@ -27,7 +34,7 @@ public class FundraisersController : ControllerBase
     public async Task<ActionResult<Guid>> Create(CreateFundraiserCommand command)
     {
         var result = await _mediator.Send(command);
-        return Ok(result);
+        return Ok(new { message = "Donor Created and attached to respective account successfully"});
     }
 
     [HttpPut("{id}")]
@@ -39,7 +46,7 @@ public class FundraisersController : ControllerBase
         }
 
         await _mediator.Send(command);
-        return NoContent();
+        return Ok(new { message = "Donor Updated successfully" });
     }
 
     //[HttpDelete("{id}")]

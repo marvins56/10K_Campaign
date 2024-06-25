@@ -1,6 +1,7 @@
 ﻿using FSH.Starter.Application.Fundraising.Campaign.Commands;
 using FSH.Starter.Application.Fundraising.Campaign.DTOS;
 using FSH.Starter.Application.Fundraising.Campaign.Querries;
+using NuGet.Protocol.Plugins;
 
 namespace FSH.Starter.Host.Controllers.Campaign;
 
@@ -27,7 +28,9 @@ public class CampaignsController : VersionedApiController
         //add try and catch block
         try
         {
-            return Ok(await Mediator.Send(new CreateCampaignCommand(request)));
+            await Mediator.Send(new CreateCampaignCommand(request));
+
+            return Ok(new { Message = "Campaign Created Successfully"});
         }
         catch (Exception ex)
         {
@@ -44,7 +47,7 @@ public class CampaignsController : VersionedApiController
                 return BadRequest();
 
             await Mediator.Send(new UpdateCampaignCommand(request));
-            return NoContent();
+            return Ok(new { Message = "Campaign Updated Successfully" });
         }
         catch (Exception ex)
         {
@@ -52,13 +55,12 @@ public class CampaignsController : VersionedApiController
         
         }
 
-    
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetAll([FromQuery] GetAllCampaignsQuery query)
+    public async Task<IActionResult> GetAll()
     {
-        var campaigns = await Mediator.Send(query);
+        var campaigns = await Mediator.Send(new GetAllCampaignsQuery());
         return Ok(campaigns);
     }
 }
