@@ -6,7 +6,13 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace FSH.Starter.Application.Fundraising.Campaign.Querries;
-public class GetAllFundraisersQuery : IRequest<List<FundraiserDto>>
+public class GetFundraiserByIdQuery : IRequest<FundraiserDto>
 {
-   
+    public Guid FundraiserId { get; set; }
+
+    public GetFundraiserByIdQuery(Guid fundraiserId)
+    {
+        FundraiserId = fundraiserId;
+    }
 }
+
