@@ -5,7 +5,7 @@ namespace FSH.Starter.Application.Common.Exceptions;
 public class NotFoundException : CustomException
 {
     public NotFoundException(string message)
-        : base(message, null, HttpStatusCode.NotFound)
+        : base(message + " Not Found", null, HttpStatusCode.NotFound)
     {
     }
 
@@ -16,7 +16,14 @@ public class NotFoundException : CustomException
         {
         }
     }
-
+    public class fundraiserException : Exception
+    {
+        public fundraiserException(string accountName)
+            : base($"Invalid Account being mapped")
+        {
+        }
+    }
+    
     public class DuplicateFundraiserException : Exception
     {
         public DuplicateFundraiserException(string accountName)
