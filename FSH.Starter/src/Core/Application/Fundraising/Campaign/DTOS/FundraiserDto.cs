@@ -14,4 +14,6 @@ public class FundraiserDto
     public string Phone { get; set; }
     public Guid AccountId { get; set; }
     public string AccountName { get; set; }
+    public List<DonationDto> Donations { get; set; }
+
 }

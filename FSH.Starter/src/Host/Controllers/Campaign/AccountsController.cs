@@ -3,6 +3,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using FSH.Starter.Application.Fundraising.Campaign.Commands;
 using FSH.Starter.Application.Fundraising.Campaign.Querries;
+using System.ComponentModel.DataAnnotations;
 
 namespace FSH.Starter.Host.Controllers.Campaign;
 [ApiController]
@@ -20,7 +21,7 @@ public class AccountsController : ControllerBase
     public async Task<IActionResult> Create(CreateAccountCommand command)
     {
         var id = await _mediator.Send(command);
-        return Ok(id);
+        return Ok(new { Message = "Account Created successfully." });
     }
 
     [HttpPut("{id}")]
@@ -28,11 +29,20 @@ public class AccountsController : ControllerBase
     {
         if (id != command.AccountId)
         {
-            return BadRequest();
+            return BadRequest(new { Message = "The provided ID does not match the command's AccountId." });
         }
 
-        await _mediator.Send(command);
-        return NoContent();
+        try
+        {
+            await _mediator.Send(command);
+            return Ok(new { Message = "Account details updated successfully." });
+        }
+       
+        catch (Exception ex)
+        {
+            // Log the exception details
+            return StatusCode(StatusCodes.Status500InternalServerError, new { Message = "An unexpected error occurred. Please try again later." });
+        }
     }
 
 

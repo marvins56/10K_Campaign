@@ -20,7 +20,7 @@ public class DonationsController : ControllerBase
     public async Task<IActionResult> Create(CreateDonationCommand command)
     {
         var donationId = await _mediator.Send(command);
-        return CreatedAtAction(nameof(GetById), new { id = donationId }, null);
+        return Ok(new { message = "Transaction successfully recieved" });
     }
 
     [HttpGet]
@@ -44,6 +44,6 @@ public class DonationsController : ControllerBase
         }
 
         await _mediator.Send(command);
-        return NoContent();
+        return Ok(new { message = "Transaction successfully updated" });
     }
 }

@@ -26,12 +26,12 @@ public class CreateFundraiserCommandHandler : IRequestHandler<CreateFundraiserCo
         if (account == null)
         {
             // If the account doesn't exist, throw a NotFoundException
-            throw new NotFoundException(nameof(Account));
+            throw new fundraiserException(nameof(Account));
         }
 
 
         // Check if an account with the same name already exists
-        if (await _context.Fundraisers.AnyAsync(a => a.Email == request.Email, cancellationToken))
+        if (await _context.Fundraisers.AnyAsync(a => a.Email == request.Email && a.AccountId == request.AccountId, cancellationToken))
         {
             throw new DuplicateAccountException(request.Email);
         }

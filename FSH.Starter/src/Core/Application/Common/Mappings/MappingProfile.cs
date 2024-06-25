@@ -16,7 +16,9 @@ public class MappingProfile : Profile
     {
         // Fundraiser to FundraiserDto with custom AccountName mapping
         CreateMap<Fundraiser, FundraiserDto>()
-            .ForMember(dest => dest.AccountName, opt => opt.MapFrom(src => src.Account.AccountName));
+            .ForMember(dest => dest.AccountName, opt => opt.MapFrom(src => src.Account.AccountName))
+             .ForMember(dest => dest.Donations, opt => opt.MapFrom(src => src.Donations));
+
 
         // Student mappings
         CreateMap<Student, StudentDto>().ReverseMap();
