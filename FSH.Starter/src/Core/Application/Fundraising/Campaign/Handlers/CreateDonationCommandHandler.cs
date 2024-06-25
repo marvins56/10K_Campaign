@@ -1,5 +1,6 @@
 ﻿using FSH.Starter.Application.Fundraising.Campaign.Commands;
 using FSH.Starter.Domain.Fundraising.Entities;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,51 @@ public class CreateDonationCommandHandler : IRequestHandler<CreateDonationComman
     {
         _context = context;
     }
+    //TODO: refactor this to update balances
+    //public async Task<Guid> Handle(CreateDonationCommand request, CancellationToken cancellationToken)
+    //{
+    //    var campaign = await _context.Campaigns
+    //        .FirstOrDefaultAsync(c => c.CampaignId == request.CampaignId, cancellationToken);
+
+    //    if (campaign == null)
+    //    {
+    //        throw new NotFoundException(nameof(Campaign));
+    //    }
+
+    //    var donor = await _context.Fundraisers.FindAsync(request.DonorId);
+    //    if (donor == null)
+    //    {
+    //        throw new NotFoundException(nameof(Fundraiser));
+    //    }
+
+    //    var donation = new Donation
+    //    {
+    //        DonationId = Guid.NewGuid(),
+    //        CampaignId = request.CampaignId,
+    //        Amount = request.Amount,
+    //        DonationDate = request.DonationDate,
+    //        DonorId = request.DonorId
+    //    };
+
+    //    _context.Donations.Add(donation);
+
+    //    // Find the account associated with the campaign
+    //    var account = await _context.Accounts
+    //        .FirstOrDefaultAsync(a => a.Campaigns.Any(c => c.CampaignId == request.CampaignId), cancellationToken);
+
+    //    if (account != null)
+    //    {
+    //        account.Balance += request.Amount;
+    //    }
+    //    else
+    //    {
+    //        throw new NotFoundException(nameof(Account));
+    //    }
+
+    //    await _context.SaveChangesAsync(cancellationToken);
+
+    //    return donation.DonationId;
+    //}
 
     public async Task<Guid> Handle(CreateDonationCommand request, CancellationToken cancellationToken)
     {
@@ -44,5 +90,7 @@ public class CreateDonationCommandHandler : IRequestHandler<CreateDonationComman
 
         return donation.DonationId;
     }
+
+
 }
 
