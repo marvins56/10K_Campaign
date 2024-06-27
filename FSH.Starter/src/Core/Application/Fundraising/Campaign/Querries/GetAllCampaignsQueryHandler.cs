@@ -18,6 +18,7 @@ public class GetAllCampaignsQueryHandler : IRequestHandler<GetAllCampaignsQuery,
         var query = _context.Campaigns
             .Include(c => c.Donations)
             .Include(c => c.CampaignStudents)
+            .Include(c=>c.Account)
             .Include(c => c.Configurations);
 
        
@@ -32,7 +33,10 @@ public class GetAllCampaignsQueryHandler : IRequestHandler<GetAllCampaignsQuery,
                 EndDate = c.EndDate,
                 Donations = _mapper.Map<List<DonationDto>>(c.Donations),
                 CampaignStudents = _mapper.Map<List<CampaignStudentDto>>(c.CampaignStudents),
-                Configurations = _mapper.Map<List<ConfigurationDto>>(c.Configurations)
+                Configurations = _mapper.Map<List<ConfigurationDto>>(c.Configurations),
+                AccountId = c.Account.AccountId,
+                AccountName = c.Account.AccountName
+
             })
             .ToListAsync(cancellationToken);
 
