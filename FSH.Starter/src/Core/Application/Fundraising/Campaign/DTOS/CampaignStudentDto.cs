@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 namespace FSH.Starter.Application.Fundraising.Campaign.DTOS;
 public class CampaignStudentDto
 {
-    public Guid Id { get; set; }
     public Guid CampaignId { get; set; }
     public Guid StudentId { get; set; }
 }

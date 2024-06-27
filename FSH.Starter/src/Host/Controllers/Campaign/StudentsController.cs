@@ -19,7 +19,8 @@ public class StudentsController : ControllerBase
     [HttpPost]
     public async Task<ActionResult<Guid>> Create(CreateStudentCommand command)
     {
-        return await _mediator.Send(command);
+        await _mediator.Send(command);
+        return Ok(new {message = "Student Created Sucessfully"});
     }
 
     [HttpGet]
@@ -44,6 +45,6 @@ public class StudentsController : ControllerBase
 
         await _mediator.Send(command);
 
-        return NoContent();
+        return Ok(new { message = "StudentDetails Updated Sucessfully" });
     }
 }

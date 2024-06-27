@@ -62,15 +62,19 @@ public class CreateDonationCommandHandler : IRequestHandler<CreateDonationComman
     //    return donation.DonationId;
     //}
 
+
     public async Task<Guid> Handle(CreateDonationCommand request, CancellationToken cancellationToken)
     {
-        var campaign = await _context.Campaigns.FindAsync(request.CampaignId);
+        var campaign = await _context.Campaigns
+            .FirstOrDefaultAsync(c => c.CampaignId == request.CampaignId, cancellationToken);
         if (campaign == null)
         {
             throw new NotFoundException(nameof(Campaign));
         }
 
-        var donor = await _context.Fundraisers.FindAsync(request.DonorId);
+        var donor = await _context.Fundraisers
+            .Include(f => f.Account)
+            .FirstOrDefaultAsync(f => f.FundraiserId == request.DonorId, cancellationToken);
         if (donor == null)
         {
             throw new NotFoundException(nameof(Fundraiser));
@@ -79,17 +83,59 @@ public class CreateDonationCommandHandler : IRequestHandler<CreateDonationComman
         var donation = new Donation
         {
             DonationId = Guid.NewGuid(),
-            CampaignId = request.CampaignId,
+            CampaignId = campaign.CampaignId,
             Amount = request.Amount,
             DonationDate = request.DonationDate,
             DonorId = request.DonorId
         };
 
         _context.Donations.Add(donation);
+
+        // Update the account balance
+        if (donor.Account != null)
+        {
+            donor.Account.Balance += request.Amount;
+            // You might want to add more logic here, like updating LastDonationDate
+            // donor.Account.LastDonationDate = request.DonationDate;
+        }
+        else
+        {
+            throw new NotFoundException(nameof(Account));
+        }
+
         await _context.SaveChangesAsync(cancellationToken);
 
         return donation.DonationId;
     }
+
+    //public async Task<Guid> Handle(CreateDonationCommand request, CancellationToken cancellationToken)
+    //{
+    //    var campaign = await _context.Campaigns.FindAsync(request.CampaignId);
+    //    if (campaign == null)
+    //    {
+    //        throw new NotFoundException(nameof(Campaign));
+    //    }
+
+    //    var donor = await _context.Fundraisers.FindAsync(request.DonorId);
+    //    if (donor == null)
+    //    {
+    //        throw new NotFoundException(nameof(Fundraiser));
+    //    }
+
+    //    var donation = new Donation
+    //    {
+    //        DonationId = Guid.NewGuid(),
+    //        CampaignId = request.CampaignId,
+    //        Amount = request.Amount,
+    //        DonationDate = request.DonationDate,
+    //        DonorId = request.DonorId
+    //    };
+
+    //    _context.Donations.Add(donation);
+    //    await _context.SaveChangesAsync(cancellationToken);
+
+    //    return donation.DonationId;
+    //}
 
 
 }

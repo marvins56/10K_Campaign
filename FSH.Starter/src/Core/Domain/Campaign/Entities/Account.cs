@@ -14,4 +14,6 @@ public class Account
     public DateTime CreatedDate { get; set; }
 
     public ICollection<Fundraiser> Fundraisers { get; set; }
+    public ICollection<Campaign> Campaigns { get; set; }  // Add this line
+
 }
