@@ -37,21 +37,32 @@ public class MappingProfile : Profile
 
 
 
-        CreateMap<CreateDonationCommand, Donation>();
+        CreateMap<CreateDonationCommand, Donation>()
+            .ForMember(dest => dest.CampaignId, opt => opt.MapFrom(src => src.CampaignId))
+           .ForMember(dest => dest.DonorId, opt => opt.MapFrom(src => src.DonorId))
+           // Map other properties as needed
+           .ReverseMap(); // If two-way mapping is required;
+
         CreateMap<UpdateDonationCommand, Donation>();
 
         // Configuration mappings
         CreateMap<Configurations, ConfigurationDto>().ReverseMap();
 
-        // Account mappings
-        CreateMap<Account, AccountDto>()
-            .ForMember(dest => dest.Fundraisers, opt => opt.MapFrom(src => src.Fundraisers));
-
-        // Campaign mappings
         CreateMap<Campaign, CampaignDto>()
-            .ForMember(dest => dest.Donations, opt => opt.MapFrom(src => src.Donations))
-            .ForMember(dest => dest.CampaignStudents, opt => opt.MapFrom(src => src.CampaignStudents))
-            .ForMember(dest => dest.Configurations, opt => opt.MapFrom(src => src.Configurations));
+     .ForMember(dest => dest.Donations, opt => opt.MapFrom(src => src.Donations))
+     .ForMember(dest => dest.CampaignStudents, opt => opt.MapFrom(src => src.CampaignStudents))
+     .ForMember(dest => dest.Configurations, opt => opt.MapFrom(src => src.Configurations))
+     .ForMember(dest => dest.AccountId, opt => opt.MapFrom(src => src.Account.AccountId))
+     .ForMember(dest => dest.AccountName, opt => opt.MapFrom(src => src.Account.AccountName))
+     .ReverseMap(); // Optional if mapping from CampaignDto back to Campaign is needed
+
+
+        CreateMap<Account, AccountDto>()
+            .ForMember(dest => dest.Fundraisers, opt => opt.MapFrom(src => src.Fundraisers))
+            // Map other properties as needed
+            .ForMember(dest => dest.campaigns, opt => opt.MapFrom(src => src.Campaigns))
+            .ReverseMap(); 
+
 
         // CampaignStudent mappings
         CreateMap<CampaignStudent, CampaignStudentDto>()
@@ -61,26 +72,5 @@ public class MappingProfile : Profile
     }
 
 
-    //public MappingProfile()
-    //{
-    //    CreateMap<Fundraiser, FundraiserDto>()
-    //        .ForMember(dest => dest.AccountName, opt => opt.MapFrom(src => src.Account.AccountName));
-
-    //    CreateMap<Student, StudentDto>().ReverseMap();
-
-    //    CreateMap<CreateStudentCommand, Student>();
-
-    //    CreateMap<DonationStudent, DonationStudentDto>();
-
-    //    CreateMap<Donation, DonationDto>();
-
-    //    CreateMap<CreateDonationCommand, Donation>();
-
-    //    CreateMap<UpdateDonationCommand, Donation>();
-
-    //    CreateMap<Configurations, ConfigurationDto>().ReverseMap();
-
-    //    CreateMap<Account, AccountDto>();
-    //    CreateMap<Fundraiser, FundraiserDto>();
-    //}
+    
 }

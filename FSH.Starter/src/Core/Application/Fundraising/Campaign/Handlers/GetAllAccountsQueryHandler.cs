@@ -25,6 +25,7 @@ public class GetAllAccountsQueryHandler : IRequestHandler<GetAllAccountsQuery, L
         //var accounts = await _context.Accounts.ToListAsync(cancellationToken);
         var accounts = await _context.Accounts
            .Include(a => a.Fundraisers)
+           .Include(a=>a.Campaigns)
            .ToListAsync(cancellationToken);
 
         return _mapper.Map<List<AccountDto>>(accounts);

@@ -27,6 +27,7 @@ public class GetCampaignByIdQueryHandler : IRequestHandler<GetCampaignByIdQuery,
             .Include(c => c.CampaignStudents)
                 .ThenInclude(cs => cs.Student)
             .Include(c => c.Configurations)
+            .Include(c=>c.Account)
             .FirstOrDefaultAsync(c => c.CampaignId == request.CampaignId, cancellationToken);
 
         if (campaign == null)

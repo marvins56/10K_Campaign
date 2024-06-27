@@ -11,3 +11,13 @@ public class GetAccountByIdQuery : IRequest<AccountDto>
     public DefaultIdType AccountId { get; set; }
 }
 
+public class GetCampaignByIdWithAccountsQuery : IRequest<CampaignDto>
+{
+    public Guid CampaignId { get; }
+
+    public GetCampaignByIdWithAccountsQuery(Guid campaignId)
+    {
+        CampaignId = campaignId;
+    }
+}
+
