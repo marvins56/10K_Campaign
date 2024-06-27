@@ -14,6 +14,9 @@ public class Campaign
     public string Description { get; set; }
     public decimal TargetAmount { get; set; }
 
+
+    public Guid AccountId { get; set; }  
+    public Account Account { get; set; } 
     public ICollection<Donation> Donations { get; set; }
     public ICollection<CampaignStudent> CampaignStudents { get; set; }
     public ICollection<Configurations> Configurations { get; set; }

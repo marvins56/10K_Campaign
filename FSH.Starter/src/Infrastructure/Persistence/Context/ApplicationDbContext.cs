@@ -118,6 +118,13 @@ public class ApplicationDbContext : BaseDbContext, IApplicationDbContext
             entity.HasKey(e => e.AccountId);
         });
 
+        modelBuilder.Entity<Account>()
+                .HasMany(a => a.Campaigns)
+                .WithOne(c => c.Account)
+                .HasForeignKey(c => c.AccountId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+
         // Configure Student entity
         modelBuilder.Entity<Student>(entity =>
         {

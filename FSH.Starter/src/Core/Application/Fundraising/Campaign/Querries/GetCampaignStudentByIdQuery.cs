@@ -8,10 +8,12 @@ using System.Threading.Tasks;
 namespace FSH.Starter.Application.Fundraising.Campaign.Querries;
 public class GetCampaignStudentByIdQuery : IRequest<CampaignStudentDto>
 {
-    public DefaultIdType Id { get; set; }
+    public Guid Id { get; set; }
+    public  Guid CampaignId { get; set; }
 
-    public GetCampaignStudentByIdQuery(DefaultIdType id)
+    public GetCampaignStudentByIdQuery(Guid id, Guid studentId)
     {
-        Id = id;
+       CampaignId  = id;
+        studentId = studentId;
     }
 }

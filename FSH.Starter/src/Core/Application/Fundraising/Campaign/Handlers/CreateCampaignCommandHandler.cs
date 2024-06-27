@@ -19,30 +19,57 @@ public class CreateCampaignCommandHandler : IRequestHandler<CreateCampaignComman
 
     public async Task<Guid> Handle(CreateCampaignCommand request, CancellationToken cancellationToken)
     {
-        // Check if a campaign with the same name already exists
-        var existingCampaign = await _context.Campaigns
-            .Where(a => a.CampaignName == request.CampaignName)
-            .ToListAsync(cancellationToken);
-
-        if (existingCampaign.Any())
+        try
         {
-            // Throw an exception or handle the error as needed
-            throw new Exception("A campaign with the same name already exists.");
+            // Check if the account exists
+            var existingAccount = await _context.Accounts.FindAsync(request.AccountId);
+            if (existingAccount == null)
+            {
+                throw new Exception($"Account with ID {request.AccountId} does not exist.");
+            }
+
+            // Check if a campaign with the same name already exists
+            var existingCampaign = await _context.Campaigns
+                .Where(a => a.CampaignName == request.CampaignName)
+                .ToListAsync(cancellationToken);
+
+            if (existingCampaign.Any())
+            {
+                throw new Exception("A campaign with the same name already exists.");
+            }
+            //check if the campaign is already attached to that account
+            var existingCampaignAccount = await _context.Campaigns
+                .Where(a => a.AccountId == request.AccountId)
+                .ToListAsync(cancellationToken);
+            if (existingCampaignAccount.Any())
+            {
+                throw new Exception("A campaign with the same name already exists.");
+
+            }
+
+
+            // Create the new campaign
+            var campaign = new FSH.Starter.Domain.Fundraising.Entities.Campaign
+            {
+                CampaignId = Guid.NewGuid(),
+                CampaignName = request.CampaignName,
+                Description = request.Description,
+                StartDate = request.StartDate,
+                EndDate = request.EndDate,
+                TargetAmount = request.TargetAmount,
+                AccountId = request.AccountId
+            };
+
+            _context.Campaigns.Add(campaign);
+            await _context.SaveChangesAsync(cancellationToken);
+
+            return campaign.CampaignId;
         }
-
-        // Create a new campaign entity
-        var campaign = new FSH.Starter.Domain.Fundraising.Entities.Campaign
+        catch (Exception ex)
         {
-            CampaignName = request.CampaignName,
-            Description = request.Description,
-            StartDate = request.StartDate,
-            EndDate = request.EndDate,
-        };
-
-        _context.Campaigns.Add(campaign);
-        await _context.SaveChangesAsync(cancellationToken);
-
-        return campaign.CampaignId;
+            throw new Exception($"Failed to create campaign: {ex.Message}");
+        }
     }
+
 
 }

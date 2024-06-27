@@ -9,6 +9,8 @@ public class NotFoundException : CustomException
     {
     }
 
+
+    
     public class DuplicateAccountException : Exception
     {
         public DuplicateAccountException(string accountName)
@@ -16,6 +18,8 @@ public class NotFoundException : CustomException
         {
         }
     }
+
+
     public class fundraiserException : Exception
     {
         public fundraiserException(string accountName)
