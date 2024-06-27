@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FSH.Starter.Domain.Fundraising.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -25,4 +26,8 @@ public class CampaignDto
     public List<DonationDto> Donations { get; set; }
     public List<CampaignStudentDto> CampaignStudents { get; set; }
     public List<ConfigurationDto> Configurations { get; set; }
+    // Account information
+    public Guid AccountId { get; set; }
+    public string AccountName { get; set; }
+
 }
