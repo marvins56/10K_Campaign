@@ -24,7 +24,9 @@ public class GetAccountByIdQueryHandler : IRequestHandler<GetAccountByIdQuery, A
     public async Task<AccountDto> Handle(GetAccountByIdQuery request, CancellationToken cancellationToken)
     {
         var account = await _context.Accounts
-            .Include(a => a.Fundraisers) 
+            .Include(a => a.Fundraisers)
+              .Include(a => a.Campaigns)
+
             .FirstOrDefaultAsync(a => a.AccountId == request.AccountId, cancellationToken);
 
         if (account == null)
