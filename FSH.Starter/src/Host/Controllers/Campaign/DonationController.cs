@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace FSH.Starter.Host.Controllers.Campaign;
 [ApiController]
 [Route("api/[controller]")]
-public class DonationsController : ControllerBase
+public class DonationsController : VersionedApiController
 {
     private readonly IMediator _mediator;
 
@@ -17,6 +17,8 @@ public class DonationsController : ControllerBase
     }
 
     [HttpPost]
+    [MustHavePermission(FSHAction.Create, FSHResource.Donations)]
+    [OpenApiOperation("Create Transaction Donation ", "")]
     public async Task<IActionResult> Create(CreateDonationCommand command)
     {
         var donationId = await _mediator.Send(command);
@@ -24,18 +26,25 @@ public class DonationsController : ControllerBase
     }
 
     [HttpGet]
+    [MustHavePermission(FSHAction.View, FSHResource.Donations)]
+    [OpenApiOperation("Get all Donation Transaction ", "")]
     public async Task<ActionResult<List<DonationDto>>> GetAll()
     {
         return await _mediator.Send(new GetAllDonationsQuery());
     }
 
-    [HttpGet("{id}")]
+    [HttpGet("{id:guid}")]
+
+    [MustHavePermission(FSHAction.View, FSHResource.Donations)]
+    [OpenApiOperation("Get all Donation Transaction ", "")]
     public async Task<ActionResult<DonationDto>> GetById(Guid id)
     {
         return await _mediator.Send(new GetDonationByIdQuery { DonationId = id });
     }
 
-    [HttpPut("{id}")]
+    [HttpPut("{id:guid}")]
+    [MustHavePermission(FSHAction.Update, FSHResource.Donations)]
+    [OpenApiOperation("Update Donation Transaction ", "")]
     public async Task<IActionResult> Update(Guid id, UpdateDonationCommand command)
     {
         if (id != command.DonationId)

@@ -10,6 +10,8 @@ namespace FSH.Starter.Host.Controllers.Campaign;
 public class CampaignsController : VersionedApiController
 {
     [HttpGet("{id}")]
+    [MustHavePermission(FSHAction.View, FSHResource.Campaigns)]
+    [OpenApiOperation("Get Campaigns details.", "")]
     public async Task<ActionResult<CampaignDto>> Get(Guid id)
     {
         try
@@ -23,6 +25,8 @@ public class CampaignsController : VersionedApiController
     }
 
     [HttpPost]
+    [MustHavePermission(FSHAction.Create, FSHResource.Campaigns)]
+    [OpenApiOperation("Create Campaigns details.", "")]
     public async Task<ActionResult<int>> Create(CreateCampaignRequest request)
     {
         //add try and catch block
@@ -38,6 +42,8 @@ public class CampaignsController : VersionedApiController
     }
 
     [HttpPut("{id}")]
+    [MustHavePermission(FSHAction.Update, FSHResource.Campaigns)]
+    [OpenApiOperation("Update Campaigns details.", "")]
     public async Task<ActionResult> Update(Guid id, UpdateCampaignRequest request)
     {
         try
@@ -55,6 +61,8 @@ public class CampaignsController : VersionedApiController
     }
 
     [HttpGet]
+    [MustHavePermission(FSHAction.View, FSHResource.Campaigns)]
+    [OpenApiOperation("View Campaigns details.", "")]
     public async Task<IActionResult> GetAll()
     {
         var campaigns = await Mediator.Send(new GetAllCampaignsQuery());
