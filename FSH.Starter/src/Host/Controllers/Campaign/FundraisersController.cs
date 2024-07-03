@@ -6,7 +6,7 @@ using MediatR;
 namespace FSH.Starter.Host.Controllers.Campaign;
 [Route("api/[controller]")]
 [ApiController]
-public class FundraisersController : ControllerBase
+public class FundraisersController : VersionedApiController
 {
     private readonly IMediator _mediator;
 
@@ -15,7 +15,9 @@ public class FundraisersController : ControllerBase
         _mediator = mediator;
     }
 
-    [HttpGet("{id}")]
+    [HttpGet("{id:guid}")]
+    [MustHavePermission(FSHAction.View, FSHResource.Fundraiser)]
+    [OpenApiOperation("Get Fundraisers ", "")]
     public async Task<ActionResult<FundraiserDto>> GetFundraiserById(Guid id)
     {
         var fundraiser = await _mediator.Send(new GetFundraiserByIdQuery(id));
@@ -23,6 +25,8 @@ public class FundraisersController : ControllerBase
     }
 
     [HttpGet]
+    [MustHavePermission(FSHAction.View, FSHResource.Fundraiser)]
+    [OpenApiOperation("Get all Fundraisers ", "")]
     public async Task<ActionResult<List<FundraiserDto>>> GetAll()
     {
         var query = new GetAllFundraisersQuery();
@@ -31,13 +35,18 @@ public class FundraisersController : ControllerBase
     }
 
     [HttpPost]
+    [MustHavePermission(FSHAction.Create, FSHResource.Fundraiser)]
+
+    [OpenApiOperation("Create Fundraisers ", "")]
     public async Task<ActionResult<Guid>> Create(CreateFundraiserCommand command)
     {
         var result = await _mediator.Send(command);
-        return Ok(new { message = "Donor Created and attached to respective account successfully"});
+        return Ok(new { message = "Donor Created and attached to respective account successfully" });
     }
 
-    [HttpPut("{id}")]
+    [HttpPut("{id:guid}")]
+    [MustHavePermission(FSHAction.Update, FSHResource.Fundraiser)]
+    [OpenApiOperation("Update Fundraisers ")]
     public async Task<ActionResult> Update(Guid id, UpdateFundraiserCommand command)
     {
         if (id != command.FundraiserId)

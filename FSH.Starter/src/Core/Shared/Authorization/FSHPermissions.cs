@@ -28,11 +28,6 @@ public static class FSHResource
     public const string Brands = nameof(Brands);
     public const string Fundraiser = nameof(Fundraiser);
     public const string Accounts = nameof(Accounts);
-    public const string Campaigns = nameof(Campaigns);
-    public const string Donations = nameof(Donations);
-    public const string Configurations = nameof(Configurations);
-    public const string CampaignStudents = nameof(CampaignStudents);
-    public const string Students = nameof(Students);
 }
 
 public static class FSHPermissions
@@ -82,38 +77,8 @@ public static class FSHPermissions
         new FSHPermission("Create Accounts", FSHAction.Create, FSHResource.Accounts),
         new FSHPermission("Update Accounts", FSHAction.Update, FSHResource.Accounts),
         new FSHPermission("Delete Accounts", FSHAction.Delete, FSHResource.Accounts),
-        new("Upgrade Tenant Subscription", FSHAction.UpgradeSubscription, FSHResource.Tenants, IsRoot: true),
-
-        // Campaigns permissions
-        new FSHPermission("View Campaigns", FSHAction.View, FSHResource.Campaigns),
-        new FSHPermission("Create Campaigns", FSHAction.Create, FSHResource.Campaigns),
-        new FSHPermission("Update Campaigns", FSHAction.Update, FSHResource.Campaigns),
-        new FSHPermission("Delete Campaigns", FSHAction.Delete, FSHResource.Campaigns),
-
-        // Donations permissions
-        new FSHPermission("View Donations", FSHAction.View, FSHResource.Donations),
-        new FSHPermission("Create Donations", FSHAction.Create, FSHResource.Donations),
-        new FSHPermission("Update Donations", FSHAction.Update, FSHResource.Donations),
-        new FSHPermission("Delete Donations", FSHAction.Delete, FSHResource.Donations),
-
-        // Configurations permissions
-        new FSHPermission("View Configurations", FSHAction.View, FSHResource.Configurations),
-        new FSHPermission("Create Configurations", FSHAction.Create, FSHResource.Configurations),
-        new FSHPermission("Update Configurations", FSHAction.Update, FSHResource.Configurations),
-        new FSHPermission("Delete Configurations", FSHAction.Delete, FSHResource.Configurations),
-
-        // CampaignStudents permissions
-        new FSHPermission("View CampaignStudents", FSHAction.View, FSHResource.CampaignStudents),
-        new FSHPermission("Create CampaignStudents", FSHAction.Create, FSHResource.CampaignStudents),
-        new FSHPermission("Update CampaignStudents", FSHAction.Update, FSHResource.CampaignStudents),
-        new FSHPermission("Delete CampaignStudents", FSHAction.Delete, FSHResource.CampaignStudents),
-
-        // Students permissions
-        new FSHPermission("View Students", FSHAction.View, FSHResource.Students),
-        new FSHPermission("Create Students", FSHAction.Create, FSHResource.Students),
-        new FSHPermission("Update Students", FSHAction.Update, FSHResource.Students),
-        new FSHPermission("Delete Students", FSHAction.Delete, FSHResource.Students)
-    };
+            new("Upgrade Tenant Subscription", FSHAction.UpgradeSubscription, FSHResource.Tenants, IsRoot: true)
+        };
 
     public static IReadOnlyList<FSHPermission> All { get; } = new ReadOnlyCollection<FSHPermission>(_all);
     public static IReadOnlyList<FSHPermission> Root { get; } = new ReadOnlyCollection<FSHPermission>(_all.Where(p => p.IsRoot).ToArray());

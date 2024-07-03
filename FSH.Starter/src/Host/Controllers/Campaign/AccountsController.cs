@@ -8,7 +8,7 @@ using System.ComponentModel.DataAnnotations;
 namespace FSH.Starter.Host.Controllers.Campaign;
 [ApiController]
 [Route("api/[controller]")]
-public class AccountsController : ControllerBase
+public class AccountsController : VersionedApiController
 {
     private readonly IMediator _mediator;
 
@@ -18,6 +18,8 @@ public class AccountsController : ControllerBase
     }
 
     [HttpPost]
+    [MustHavePermission(FSHAction.Create, FSHResource.Accounts)]
+    [OpenApiOperation("Create Account.", "allows user to create Transactional account")]
     public async Task<IActionResult> Create(CreateAccountCommand command)
     {
         var id = await _mediator.Send(command);
@@ -25,6 +27,8 @@ public class AccountsController : ControllerBase
     }
 
     [HttpPut("{id}")]
+    [MustHavePermission(FSHAction.Update, FSHResource.Accounts)]
+    [OpenApiOperation("Update Transaction Account.", "allows user to Update Transactional account")]
     public async Task<IActionResult> Update(Guid id, UpdateAccountCommand command)
     {
         if (id != command.AccountId)
@@ -47,6 +51,9 @@ public class AccountsController : ControllerBase
 
 
     [HttpGet("{id}")]
+    [MustHavePermission(FSHAction.Update, FSHResource.Accounts)]
+    [OpenApiOperation("retireave Transaction Account.", "allows user to retireave Transactional account")]
+
     public async Task<ActionResult<AccountDto>> GetById(Guid id)
     {
         var account = await _mediator.Send(new GetAccountByIdQuery { AccountId = id });
@@ -54,6 +61,9 @@ public class AccountsController : ControllerBase
     }
 
     [HttpGet]
+    [MustHavePermission(FSHAction.View, FSHResource.Accounts)]
+    [OpenApiOperation("retireave Transaction Account.", "allows user to retireave Transactional account")]
+
     public async Task<ActionResult<List<AccountDto>>> GetAll()
     {
         var accounts = await _mediator.Send(new GetAllAccountsQuery());
