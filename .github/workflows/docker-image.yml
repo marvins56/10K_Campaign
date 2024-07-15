@@ -13,11 +13,6 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
     
-    - name: Display directory structure
-      run: |
-        pwd
-        ls -R
-    
     - name: Log in to Docker Hub
       uses: docker/login-action@v3
       with:
@@ -27,7 +22,7 @@ jobs:
     - name: Build and push Docker image
       uses: docker/build-push-action@v5
       with:
-        context: .
-        file: ./src/Host/Dockerfile
+        context: ./FSH.Starter
+        file: ./FSH.Starter/src/Host/Dockerfile
         push: true
         tags: ${{ secrets.DOCKERHUB_USERNAME }}/10kcampaign:latest
