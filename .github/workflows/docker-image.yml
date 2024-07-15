@@ -7,12 +7,11 @@ on:
     branches: [ "main" ]
 
 jobs:
-
   build:
-
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v4
+    - name: List contents of the src/Host directory
+      run: ls -la src/Host
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+      run: docker build . --file src/Host/Dockerfile --tag my-image-name:$(date +%s)
