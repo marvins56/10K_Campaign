@@ -26,3 +26,11 @@ jobs:
         file: ./FSH.Starter/src/Host/Dockerfile
         push: true
         tags: ${{ secrets.DOCKERHUB_USERNAME }}/10kcampaign:latest
+        build-args: |
+          GITHUB_SHA=${{ github.sha }}
+        no-cache: true
+
+    - name: Display Docker build logs
+      if: failure()
+      run: |
+        docker buildx build --progress=plain --no-cache ./FSH.Starter -f ./FSH.Starter/src/Host/Dockerfile
