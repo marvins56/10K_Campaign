@@ -2,6 +2,5 @@
   "DatabaseSettings": {
     "DBProvider": "mssql",
     "ConnectionString": "Server=tcp:10kcampaign.database.windows.net,1433;Initial Catalog=10kcampaign;Persist Security Info=False;User ID=Marvinsk123;Password=Xminau88=.;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"
-
-    //"ConnectionString": "Data Source=.;Initial Catalog=10K;Integrated Security=True;MultipleActiveResultSets=True;Encrypt=True;TrustServerCertificate=True;"
-
+  }
+}
