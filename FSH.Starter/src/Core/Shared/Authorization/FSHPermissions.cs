@@ -28,6 +28,12 @@ public static class FSHResource
     public const string Brands = nameof(Brands);
     public const string Fundraiser = nameof(Fundraiser);
     public const string Accounts = nameof(Accounts);
+    public const string Donations = nameof(Donations);
+    public const string Campaigns = nameof(Campaigns);
+    public const string Students = nameof(Students);
+
+
+
 }
 
 public static class FSHPermissions
@@ -71,6 +77,21 @@ public static class FSHPermissions
         new FSHPermission("Create Fundraisers", FSHAction.Create, FSHResource.Fundraiser),
         new FSHPermission("Update Fundraisers", FSHAction.Update, FSHResource.Fundraiser),
         new FSHPermission("Delete Fundraisers", FSHAction.Delete, FSHResource.Fundraiser),
+
+              new FSHPermission("View Donations", FSHAction.View, FSHResource.Donations),
+        new FSHPermission("Create Donations", FSHAction.Create, FSHResource.Donations),
+        new FSHPermission("Update Donations", FSHAction.Update, FSHResource.Donations),
+        new FSHPermission("Delete Donations", FSHAction.Delete, FSHResource.Donations),
+
+                      new FSHPermission("View Donations", FSHAction.View, FSHResource.Campaigns),
+        new FSHPermission("Create Campaigns", FSHAction.Create, FSHResource.Campaigns),
+        new FSHPermission("Update Campaigns", FSHAction.Update, FSHResource.Campaigns),
+        new FSHPermission("Delete Campaigns", FSHAction.Delete, FSHResource.Campaigns),
+
+                            new FSHPermission("View Donations", FSHAction.View, FSHResource.Students),
+        new FSHPermission("Create Students", FSHAction.Create, FSHResource.Students),
+        new FSHPermission("Update Students", FSHAction.Update, FSHResource.Students),
+        new FSHPermission("Delete Students", FSHAction.Delete, FSHResource.Students),
 
         // Accounts permissions
         new FSHPermission("View Accounts", FSHAction.View, FSHResource.Accounts),
