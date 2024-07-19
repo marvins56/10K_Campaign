@@ -1,8 +1,10 @@
+# Base image
 FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS base
 WORKDIR /app
 EXPOSE 80
 EXPOSE 443
 
+# Build image
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
 COPY ["Directory.Build.props", "."]
@@ -22,10 +24,13 @@ COPY . .
 WORKDIR "/src/src/Host"
 RUN dotnet build "Host.csproj" -c Release -o /app/build
 
+# Publish image
 FROM build AS publish
 RUN dotnet publish "Host.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
+# Final image
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
+ENV ConnectionStrings__DefaultConnection="Server=tcp:10kcampaign.database.windows.net,1433;Initial Catalog=10kcampaign;Persist Security Info=False;User ID=Marvinsk123;Password=Xminau88=.;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"
 ENTRYPOINT ["dotnet", "FSH.Starter.Host.dll"]
