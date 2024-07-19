@@ -1,7 +1,7 @@
 {
   "DatabaseSettings": {
     "DBProvider": "mssql",
-    "ConnectionString": "Server=tcp:10kcampaign.database.windows.net,1433;Initial Catalog=10kcampaign;Persist Security Info=False;User ID=Marvinsk123;Password=Xminau88=.;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"
-
-    }
+    //"ConnectionString": "Server=tcp:10kcampaign.database.windows.net,1433;Initial Catalog=10kcampaign;Persist Security Info=False;User ID=Marvinsk123;Password=Xminau88=.;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"
+    "ConnectionString": "Data Source=tcp:tenkcampaign.database.windows.net,1433;Initial Catalog=Host_db;User Id=Marvinsk123@tenkcampaign;Password=Xminau88=."
+  }
 }
