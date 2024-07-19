@@ -32,5 +32,4 @@ RUN dotnet publish "Host.csproj" -c Release -o /app/publish /p:UseAppHost=false
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENV ConnectionStrings__DefaultConnection="Server=tcp:10kcampaign.database.windows.net,1433;Initial Catalog=10kcampaign;Persist Security Info=False;User ID=Marvinsk123;Password=Xminau88=.;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"
 ENTRYPOINT ["dotnet", "FSH.Starter.Host.dll"]
